@@ -7,7 +7,12 @@
   "dependencies": {
     "express": "^4.17.2"
   },
+  "scripts": {
+    "start-dev": "nodemon src/index.js",
+    "lint": "eslint ."
+  },
   "devDependencies": {
-    "eslint": "^8.6.0"
+    "eslint": "^8.6.0",
+    "nodemon": "^2.0.15"
   }
 }

@@ -5,7 +5,8 @@
   "author": "pradip",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6"
   },
   "scripts": {
     "start-dev": "cross-env NODE_ENV=development nodemon src/index.js",

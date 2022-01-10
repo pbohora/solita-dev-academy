@@ -10,8 +10,8 @@ connectDb()
   .then(() => {
     console.log('Databse is connected');
   })
-  .catch(() => {
-    console.log('error connecting database');
+  .catch((error) => {
+    console.log('error connecting database', error);
   });
 
 server.listen(config.port, () => {

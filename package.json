@@ -1,0 +1,10 @@
+{
+  "name": "farm-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "pradip",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}

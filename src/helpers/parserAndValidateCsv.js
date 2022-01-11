@@ -5,12 +5,13 @@ const parserAndValidateCsv = (file) => {
 
   // open uploaded file
   csv
-    .parseFile(file)
+    .parseFile(file, { headers: true })
     .on("data", function (data) {
+      console.log(data, data.sensorType);
       fileRows.push(data);
     })
     .on("end", function () {
-      console.log(fileRows);
+      // console.log(fileRows);
     });
 };
 

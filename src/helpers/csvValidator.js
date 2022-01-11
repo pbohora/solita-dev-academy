@@ -26,3 +26,5 @@ const csvValidator = (data) => {
   }
   return false;
 };
+
+module.exports = csvValidator;

@@ -14,12 +14,17 @@
     "start-dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "build": "cross-env NODE_ENV=production node src/index.js",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix --ext .js ."
+    "lint-fix": "eslint --fix --ext .js .",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "eslint": "^8.6.0",
+    "jest": "^27.4.7",
     "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

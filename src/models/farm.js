@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const farmSchema = mongoose.Schema({
   name: {
@@ -11,14 +11,14 @@ const farmSchema = mongoose.Schema({
   surveys: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Survey",
+      ref: 'Survey',
     },
   ],
 });
 
 farmSchema.plugin(uniqueValidator);
 
-farmSchema.set("toJSON", {
+farmSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -26,4 +26,4 @@ farmSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Farm", farmSchema);
+module.exports = mongoose.model('Farm', farmSchema);

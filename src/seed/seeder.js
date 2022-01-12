@@ -1,6 +1,10 @@
+require("dotenv").config();
 const path = require("path");
+const mongoose = require("mongoose");
+const config = require("../config");
 const parserAndValidateCsv = require("../helpers/parserAndValidateCsv");
 const Survey = require("../models/survey");
+const Farm = require("../models/farm");
 
 const partialTechCsv = path.resolve(
   __dirname,
@@ -22,8 +26,29 @@ const NoorasFarmCsv = path.resolve(
   "Nooras_farm.csv"
 );
 
+mongoose
+  .connect(config.dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Databse is connected");
+  })
+  .catch((error) => {
+    console.log("error connecting database", error);
+  });
+
 console.log(partialTechCsv);
 
-const seedSurveys = parserAndValidateCsv(partialTechCsv)
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
+const seed = async () => {
+  try {
+    const seedSurveys = await parserAndValidateCsv(partialTechCsv);
+    console.log(seedSurveys);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+seed().then(() => {
+  mongoose.connection.close();
+});

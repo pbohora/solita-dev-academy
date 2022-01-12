@@ -25,7 +25,7 @@ describe("when there is farm data at db", () => {
     });
   });
 
-  test("GET /farm/:id", async () => {
+  test("GET /farm/:farmId", async () => {
     await api
       .get(`/api/farms/${farmId}`)
       .expect(200)
@@ -34,7 +34,7 @@ describe("when there is farm data at db", () => {
       });
   });
 
-  test("GET /farm/:id/surveys", async () => {
+  /*test("GET /farm/:farmId/surveys", async () => {
     await api
       .get(`/api/farms/${farmId}/surveys`)
       .expect(200)
@@ -42,7 +42,7 @@ describe("when there is farm data at db", () => {
         res.body.data.length = 3;
         res.body.data[1].sensorType = "temperature";
       });
-  });
+  });*/
 });
 
 afterAll(() => {

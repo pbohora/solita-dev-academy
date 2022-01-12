@@ -24,6 +24,7 @@ let farmId;
 
 const initialDataLoad = async () => {
   await Survey.deleteMany({});
+  await Farm.deleteMany({});
   const farm = new Farm(farmData);
   await farm.save();
   const savedFarm = farm.toJSON();

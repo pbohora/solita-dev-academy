@@ -31,11 +31,10 @@ describe("test csv data validator functions", () => {
 
 describe("test csv file parser and validator functions", () => {
   test("return error meaasage for invalid  csv file", async () => {
-    expect.assertions(1);
     try {
       await parserAndValidateCsv(testCsvFile2);
     } catch (e) {
-      expect(e).toMatch("error");
+      expect(e).toEqual({ error: "missing field" });
     }
   });
 });

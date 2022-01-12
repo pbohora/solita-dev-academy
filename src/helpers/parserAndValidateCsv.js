@@ -14,7 +14,7 @@ const parserAndValidateCsv = (file) => {
           !Object.prototype.hasOwnProperty.call(data, "sensorType") ||
           !Object.prototype.hasOwnProperty.call(data, "value")
         ) {
-          return reject({ message: "missing field" });
+          return reject({ error: "missing field" });
         }
         const isDataValid = csvValidator(data);
         if (isDataValid) {
@@ -22,7 +22,9 @@ const parserAndValidateCsv = (file) => {
         }
       })
       .on("end", function () {
-        resolve({ farm: fileRows[0].location, data: fileRows });
+        fileRows && fileRows > 0
+          ? resolve({ farm: fileRows[0].location, data: fileRows })
+          : reject();
       });
   });
 };

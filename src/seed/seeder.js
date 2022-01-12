@@ -1,26 +1,26 @@
-require("dotenv").config();
-const path = require("path");
-const mongoose = require("mongoose");
-const config = require("../config");
-const parserAndValidateCsv = require("../helpers/parserAndValidateCsv");
-const Survey = require("../models/survey");
-const Farm = require("../models/farm");
+require('dotenv').config();
+const path = require('path');
+const mongoose = require('mongoose');
+const config = require('../config');
+const parserAndValidateCsv = require('../helpers/parserAndValidateCsv');
+const Survey = require('../models/survey');
+const Farm = require('../models/farm');
 
 const partialTechCsv = path.resolve(
   __dirname,
-  "../csv_files",
-  "PartialTech.csv"
+  '../csv_files',
+  'PartialTech.csv'
 );
 const frimanMetsolaCsv = path.resolve(
   __dirname,
-  "../csv_files",
-  "friman_metsola.csv"
+  '../csv_files',
+  'friman_metsola.csv'
 );
-const ossiFarmCsv = path.resolve(__dirname, "../csv_files", "ossi_farm.csv");
+const ossiFarmCsv = path.resolve(__dirname, '../csv_files', 'ossi_farm.csv');
 const noorasFarmCsv = path.resolve(
   __dirname,
-  "../csv_files",
-  "Nooras_farm.csv"
+  '../csv_files',
+  'Nooras_farm.csv'
 );
 
 //Database connection
@@ -30,10 +30,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Database is connected");
+    console.log('Database is connected');
   })
   .catch((error) => {
-    console.log("error connecting database", error);
+    console.log('error connecting database', error);
   });
 
 //parse and save data to database

@@ -22,7 +22,7 @@ const parserAndValidateCsv = (file) => {
         }
       })
       .on("end", function () {
-        fileRows && fileRows > 0
+        fileRows && fileRows.length > 0
           ? resolve({ farm: fileRows[0].location, data: fileRows })
           : reject();
       });

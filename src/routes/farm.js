@@ -10,9 +10,9 @@ farmRouter.get("/", async (req, res) => {
   }
 });
 
-farmRouter.get(`/:farmId`, async (req, res) => {
+farmRouter.get("/:farmId", async (req, res) => {
   try {
-    const { farmId } = request.params;
+    const { farmId } = req.params;
     const farm = await Farm.findById(farmId);
 
     res.status(200).json(farm.toSimpleJSON());

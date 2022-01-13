@@ -20,18 +20,16 @@ const surveys = [
 ];
 const farmData = { name: "test farm" };
 
-let farmId;
-
 const initialDataLoad = async () => {
   await Survey.deleteMany({});
   await Farm.deleteMany({});
   const farm = new Farm(farmData);
   await farm.save();
   const savedFarm = farm.toJSON();
-  farmId = savedFarm.id;
+
   const modifiedSurveys = surveys.map((survey) => ({
     ...survey,
-    farm: farmId,
+    farm: savedFarm.id,
   }));
 
   const savedSurvays = await Survey.insertMany(modifiedSurveys);
@@ -40,4 +38,4 @@ const initialDataLoad = async () => {
   await farm.save();
 };
 
-module.exports = { initialDataLoad, farmId };
+module.exports = { initialDataLoad };

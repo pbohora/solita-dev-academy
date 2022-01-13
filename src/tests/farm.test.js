@@ -2,35 +2,40 @@ const supertest = require("supertest");
 const mongoose = require("mongoose");
 const app = require("../app");
 
-const { initialDataLoad, farmId } = require("./testHelpers/helpers");
+const { initialDataLoad } = require("./testHelpers/helpers");
 
 const api = supertest(app);
+
+let farmId;
 
 describe("when there is farm data at db", () => {
   beforeEach(async () => {
     await initialDataLoad();
   });
 
-  test("farms are returned as json", async () => {
-    await api
+  test("farms are returned as json", (done) => {
+    api
       .get("/api/farms")
       .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect("Content-Type", /application\/json/)
+      .end((err, res) => {
+        if (err) return done(err);
+        return done();
+      });
   });
 
-  test("GET /farm", async () => {
-    await api.get("/api/farms").expect((res) => {
-      res.body.data.length = 1;
-      res.body.data[0].name = "test farm";
-    });
-  });
-
-  test("GET /farm/:farmId", async () => {
-    await api
-      .get(`/api/farms/${farmId}`)
-      .expect(200)
+  test("GET /farm", (done) => {
+    api
+      .get("/api/farms")
       .expect((res) => {
-        res.body.data.name = "test farm";
+        res.body.length = 1;
+        res.body[0].name = "test farm";
+        farmId = res.body[0].id;
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        farmId = res.body[0].id;
+        return done();
       });
   });
 
@@ -43,6 +48,21 @@ describe("when there is farm data at db", () => {
         res.body.data[1].sensorType = "temperature";
       });
   });*/
+});
+
+describe("get farm details when there is farm id", () => {
+  test("GET /farms/:farmId", (done) => {
+    api
+      .get(`/api/farms/${farmId}`)
+      .expect(200)
+      .expect((res) => {
+        res.body.name = "test farm";
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        return done();
+      });
+  });
 });
 
 afterAll(() => {

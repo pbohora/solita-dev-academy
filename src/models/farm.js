@@ -26,4 +26,11 @@ farmSchema.set('toJSON', {
   },
 });
 
+farmSchema.methods.toSimpleJSON = function () {
+  return {
+    name: this.name,
+    id: this._id,
+  };
+};
+
 module.exports = mongoose.model('Farm', farmSchema);

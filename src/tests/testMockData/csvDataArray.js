@@ -14,6 +14,12 @@ const csvDataArray = [
   {
     datetime: '2019-02-12T23:45:19.138Z',
   },
+  {
+    location: 'Test Farm 2',
+    datetime: '2020-01-12T23:45:19.138Z',
+    sensorType: 'wind',
+    value: '201.2',
+  },
 ];
 
 module.exports = csvDataArray;

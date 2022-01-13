@@ -27,6 +27,9 @@ describe('test csv data validator functions', () => {
   test('return false for data with only date property', () => {
     expect(csvDataValidator(csvDataArray[2])).toEqual(false);
   });
+  test('return false for data with sensorType other than ph, temperature or rainFall', () => {
+    expect(csvDataValidator(csvDataArray[3])).toEqual(false);
+  });
 });
 
 describe('test csv file parser and validator functions', () => {

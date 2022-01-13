@@ -1,6 +1,6 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const config = require('../config');
+require("dotenv").config();
+const mongoose = require("mongoose");
+const config = require("../config");
 
 const connectDb = async (url = config.dbUrl) => {
   return await mongoose.connect(url, {
@@ -10,7 +10,10 @@ const connectDb = async (url = config.dbUrl) => {
 };
 
 const closeDatabase = async () => {
-  //await mongoose.connection.dropDatabase();
+  const collections = await mongoose.connection.db.collections();
+  for (let collection of collections) {
+    await collection.remove();
+  }
   await mongoose.disconnect();
 };
 

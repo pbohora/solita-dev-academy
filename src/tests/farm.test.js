@@ -39,6 +39,31 @@ describe("when there is farm data at db", () => {
       });
   });
 
+  test("POST /farm (create new farm)", (done) => {
+    request(app)
+      .post("/api/farms/create")
+      .expect("Content-Type", /json/)
+      .send({
+        name: "Old Helsinki farm",
+      })
+      .expect(201)
+      .expect((res) => {
+        res.body.length = 2;
+        res.body.name = "Old Helsinki farm";
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        elementId = res.body.data[1].id;
+        return done();
+      });
+
+    Farm.find({}).expect((data) => {
+      data.length = 2;
+      const farmNames = data.map((farm) => farm.name);
+      expect(farmNames).toContain("Old Helsinki farm");
+    });
+  });
+
   /*test("GET /farm/:farmId/surveys", async () => {
     await api
       .get(`/api/farms/${farmId}/surveys`)

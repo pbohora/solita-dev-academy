@@ -1,6 +1,6 @@
-const supertest = require("supertest");
-const { connectDb, closeDatabase } = require("../databse/db");
-const app = require("../app");
+const supertest = require('supertest');
+const { connectDb, closeDatabase } = require('../databse/db');
+const app = require('../app');
 
 const api = supertest(app);
 
@@ -12,9 +12,9 @@ afterAll(async () => {
   await closeDatabase();
 });
 
-test("surveys are returned as json", async () => {
+test('surveys are returned as json', async () => {
   await api
-    .get("/api/surveys")
+    .get('/api/surveys')
     .expect(200)
-    .expect("Content-Type", /application\/json/);
+    .expect('Content-Type', /application\/json/);
 });

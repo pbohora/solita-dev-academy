@@ -18,7 +18,7 @@
     "seed": "cross-env NODE_ENV=development node src/seed/seeder.js",
     "lint": "eslint .",
     "lint-fix": "eslint --fix --ext .js .",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

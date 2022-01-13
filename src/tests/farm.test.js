@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 const app = require("../app");
 
 const { initialDataLoad } = require("./testHelpers/helpers");
-
+const Farm = require("../models/farm");
 const api = supertest(app);
 
 let farmId;
 
-describe("when there is farm data at db", () => {
-  beforeEach(async () => {
-    await initialDataLoad();
-  });
+beforeAll(async () => {
+  await initialDataLoad();
+});
 
+describe("when there is farm data at db", () => {
   test("farms are returned as json", (done) => {
     api
       .get("/api/farms")
@@ -39,8 +39,8 @@ describe("when there is farm data at db", () => {
       });
   });
 
-  test("POST /farm (create new farm)", (done) => {
-    request(app)
+  test("POST /farm (create new farm)", async () => {
+    await api
       .post("/api/farms/create")
       .expect("Content-Type", /json/)
       .send({
@@ -50,18 +50,13 @@ describe("when there is farm data at db", () => {
       .expect((res) => {
         res.body.length = 2;
         res.body.name = "Old Helsinki farm";
-      })
-      .end((err, res) => {
-        if (err) return done(err);
-        elementId = res.body.data[1].id;
-        return done();
       });
 
-    Farm.find({}).expect((data) => {
-      data.length = 2;
-      const farmNames = data.map((farm) => farm.name);
-      expect(farmNames).toContain("Old Helsinki farm");
-    });
+    const farmData = await Farm.find({});
+    expect(farmData.length).toEqual(2);
+
+    const farmNames = farmData.map((farm) => farm.name);
+    expect(farmNames).toContain("Old Helsinki farm");
   });
 
   /*test("GET /farm/:farmId/surveys", async () => {

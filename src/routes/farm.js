@@ -1,9 +1,9 @@
-const farmRouter = require("express").Router();
-const { body, validationResult } = require("express-validator");
+const farmRouter = require('express').Router();
+const { body, validationResult } = require('express-validator');
 
-const Farm = require("../models/farm");
+const Farm = require('../models/farm');
 
-farmRouter.get("/", async (req, res) => {
+farmRouter.get('/', async (req, res, next) => {
   try {
     const farms = await Farm.find({});
     res.status(200).json(farms.map((farm) => farm.toSimpleJSON()));
@@ -12,7 +12,7 @@ farmRouter.get("/", async (req, res) => {
   }
 });
 
-farmRouter.get("/:farmId", async (req, res, next) => {
+farmRouter.get('/:farmId', async (req, res, next) => {
   try {
     const { farmId } = req.params;
     const farm = await Farm.findById(farmId);
@@ -24,12 +24,12 @@ farmRouter.get("/:farmId", async (req, res, next) => {
 });
 
 farmRouter.post(
-  "/create",
-  body("name").isLength({ min: 3 }),
-  async (req, res) => {
+  '/create',
+  body('name').isLength({ min: 3 }),
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ error: "invalid farm name" });
+      return res.status(400).json({ error: 'invalid farm name' });
     }
     try {
       const farm = new Farm({ name: req.body.name });

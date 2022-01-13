@@ -1,12 +1,17 @@
-const mongoose = require('mongoose');
-const config = require('../config');
+require("dotenv").config();
+const mongoose = require("mongoose");
+const config = require("../config");
 
-const connectDb = (url = config.dbUrl, opts = {}) => {
-  return mongoose.connect(url, {
-    ...opts,
+const connectDb = async (url = config.dbUrl) => {
+  return await mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 };
 
-module.exports = connectDb;
+const closeDatabase = async () => {
+  //await mongoose.connection.dropDatabase();
+  await mongoose.disconnect();
+};
+
+module.exports = { connectDb, closeDatabase };

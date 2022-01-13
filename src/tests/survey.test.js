@@ -1,16 +1,20 @@
-const supertest = require('supertest');
-const mongoose = require('mongoose');
-const app = require('../app');
+const supertest = require("supertest");
+const { connectDb, closeDatabase } = require("../databse/db");
+const app = require("../app");
 
 const api = supertest(app);
 
-test('surveys are returned as json', async () => {
-  await api
-    .get('/api/surveys')
-    .expect(200)
-    .expect('Content-Type', /application\/json/);
+beforeAll(async () => {
+  await connectDb();
 });
 
-afterAll(() => {
-  mongoose.connection.close();
+afterAll(async () => {
+  await closeDatabase();
+});
+
+test("surveys are returned as json", async () => {
+  await api
+    .get("/api/surveys")
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
 });

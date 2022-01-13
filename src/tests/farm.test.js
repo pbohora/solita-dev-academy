@@ -1,14 +1,14 @@
-const supertest = require("supertest");
-const { connectDb, closeDatabase } = require("../databse/db");
+const supertest = require('supertest');
+const { connectDb, closeDatabase } = require('../databse/db');
 
-const app = require("../app");
+const app = require('../app');
 
-const { initialDataLoad } = require("./testHelpers/helpers");
-const Farm = require("../models/farm");
+const { initialDataLoad } = require('./testHelpers/helpers');
+const Farm = require('../models/farm');
 const api = supertest(app);
 
 let farmId;
-let db;
+
 beforeAll(async () => {
   await connectDb();
   await initialDataLoad();
@@ -18,24 +18,24 @@ afterAll(async () => {
   await closeDatabase();
 });
 
-describe("when there is farm data at db", () => {
-  test("farms are returned as json", (done) => {
+describe('when there is farm data at db', () => {
+  test('farms are returned as json', (done) => {
     api
-      .get("/api/farms")
+      .get('/api/farms')
       .expect(200)
-      .expect("Content-Type", /application\/json/)
+      .expect('Content-Type', /application\/json/)
       .end((err) => {
         if (err) return done(err);
         return done();
       });
   });
 
-  test("GET /farm", (done) => {
+  test('GET /farm', (done) => {
     api
-      .get("/api/farms")
+      .get('/api/farms')
       .expect((res) => {
         res.body.length = 1;
-        res.body[0].name = "test farm";
+        res.body[0].name = 'test farm';
         farmId = res.body[0].id;
       })
       .end((err, res) => {
@@ -45,24 +45,24 @@ describe("when there is farm data at db", () => {
       });
   });
 
-  test("POST /farm (create new farm)", async () => {
+  test('POST /farm (create new farm)', async () => {
     await api
-      .post("/api/farms/create")
-      .expect("Content-Type", /json/)
+      .post('/api/farms/create')
+      .expect('Content-Type', /json/)
       .send({
-        name: "Old Helsinki farm",
+        name: 'Old Helsinki farm',
       })
       .expect(201)
       .expect((res) => {
         res.body.length = 2;
-        res.body.name = "Old Helsinki farm";
+        res.body.name = 'Old Helsinki farm';
       });
 
     const farmData = await Farm.find({});
     expect(farmData.length).toEqual(2);
 
     const farmNames = farmData.map((farm) => farm.name);
-    expect(farmNames).toContain("Old Helsinki farm");
+    expect(farmNames).toContain('Old Helsinki farm');
   });
 
   /*test("GET /farm/:farmId/surveys", async () => {
@@ -76,13 +76,13 @@ describe("when there is farm data at db", () => {
   });*/
 });
 
-describe("get farm details when there is farm id", () => {
-  test("GET /farms/:farmId", (done) => {
+describe('get farm details when there is farm id', () => {
+  test('GET /farms/:farmId', (done) => {
     api
       .get(`/api/farms/${farmId}`)
       .expect(200)
       .expect((res) => {
-        res.body.name = "test farm";
+        res.body.name = 'test farm';
       })
       .end((err) => {
         if (err) return done(err);

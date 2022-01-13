@@ -1,6 +1,6 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const config = require("../config");
+require('dotenv').config();
+const mongoose = require('mongoose');
+const config = require('../config');
 
 const connectDb = async (url = config.dbUrl) => {
   return await mongoose.connect(url, {
